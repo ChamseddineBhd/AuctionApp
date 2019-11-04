@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,7 +24,8 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public Auction createAuction(Auction auction, Long auctionHouseId) {
-		AuctionHouse auctionHouse = auctionHouseDao.findById(auctionHouseId).get();
+		AuctionHouse auctionHouse = auctionHouseDao.findById(auctionHouseId).orElseThrow( () ->
+				new IllegalArgumentException("auction not found !"));
 		auction.setAuctionHouse(auctionHouse);
 		auctionDao.save(auction);
 		return auction;
@@ -31,7 +33,8 @@ public class AuctionServiceImpl implements AuctionService {
 
 	@Override
 	public List<Auction> listAuctions(Long auctionHouseId) {
-		List<Auction> auctions =  auctionHouseDao.findById(auctionHouseId).get().getAuctions();
+		List<Auction> auctions =  auctionHouseDao.findById(auctionHouseId).orElseThrow( () ->
+				new IllegalArgumentException("auctionHouse not found !")).getAuctions();
 		// to force loading auctions
 		auctions.size();
 		return auctions;
@@ -43,8 +46,17 @@ public class AuctionServiceImpl implements AuctionService {
 	}
 
 	@Override
-	public List<Auction> listAuctionsBySTatus(String status) {
-		return null;
+	public List<Auction> listAuctionsBySTatus(Long auctionHouseId, String status) {
+		switch (status) {
+			case "not started ":
+				return listAuctions(auctionHouseId).stream().filter(auction -> auction.getStatus().equals("not started")).collect(Collectors.toList());
+			case "terminated":
+				return listAuctions(auctionHouseId).stream().filter(auction -> auction.getStatus().equals("terminated")).collect(Collectors.toList());
+			case "running" :
+				return listAuctions(auctionHouseId).stream().filter(auction -> auction.getStatus().equals("running")).collect(Collectors.toList());
+			default:
+				throw new IllegalArgumentException("possible status are : running, terminated and not started");
+		}
 	}
 
 	@Override
@@ -54,6 +66,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public Auction findById(Long auctionId) {
-        return auctionDao.findById(auctionId).get();
+        return auctionDao.findById(auctionId).orElseThrow( () ->
+				new IllegalArgumentException("auction not found !"));
     }
 }

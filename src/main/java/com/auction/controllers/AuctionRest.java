@@ -26,6 +26,11 @@ public class AuctionRest {
 		return auctionService.listAuctions(auctionHouseId);
 	}
 
+	@GetMapping("/auctions/{auctionHouseId}/{status}")
+	public List<Auction> listAuctions(@PathVariable("auctionHouseId") Long auctionHouseId, @PathVariable("status") String status){
+		return auctionService.listAuctionsBySTatus(auctionHouseId, status);
+	}
+
 
 	@PostMapping("/auction/{auctionHouseId}")
 	public void createAuction(@RequestBody Auction auction, @PathVariable("auctionHouseId") Long auctionHouseId) {

@@ -39,4 +39,15 @@ public class Auction {
 	@OneToMany(mappedBy="auction",  cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Bid> bids;
+
+	public String getStatus() {
+		if (LocalDateTime.now().compareTo(start) < 0) {
+			return "not running";
+		} else if (LocalDateTime.now().compareTo(end) > 0) {
+			return "terminated";
+
+		} else {
+			return "running";
+		}
+	}
 }

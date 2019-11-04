@@ -12,7 +12,7 @@ public interface AuctionService {
 
     public void deleteAuction(Long auctionId);
 
-    public List<Auction> listAuctionsBySTatus(String status);
+    public List<Auction> listAuctionsBySTatus(Long auctionHouseId, String status);
 
     public void deleteAll();
 
