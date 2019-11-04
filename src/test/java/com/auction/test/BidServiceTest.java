@@ -44,7 +44,6 @@ public class BidServiceTest {
 		chamseddine = userService.createUser(chamseddine);
 		olivier = userService.createUser(olivier);
 
-
 		Auction auction = auctionService.createAuction(Auction.builder()
 				.name("firstAuction")
 				.price(700)
