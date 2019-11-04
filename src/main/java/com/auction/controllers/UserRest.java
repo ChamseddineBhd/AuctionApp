@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/" + UserRest.API_VERSION + "auction-server" )
+@RequestMapping(value = "/" + UserRest.API_VERSION + "/auction-server" )
 public class UserRest {
 
 	public static final String API_VERSION = "v1";

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/" + AuctionHouseRest.API_VERSION + "auction-server" )
+@RequestMapping(value = "/" + AuctionHouseRest.API_VERSION + "/auction-server" )
 public class AuctionHouseRest {
 
 	public static final String API_VERSION = "v1";

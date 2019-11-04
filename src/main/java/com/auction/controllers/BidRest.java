@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/" + BidRest.API_VERSION + "auction-server" )
+@RequestMapping(value = "/" + BidRest.API_VERSION + "/auction-server" )
 public class BidRest {
 
 	public static final String API_VERSION = "v1";

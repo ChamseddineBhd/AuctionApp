@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
@@ -33,6 +34,15 @@ public class BidServiceTest {
 
 	@Autowired
 	private BidService bidService;
+
+	@PostConstruct
+	void init() {
+		// clean the h2 db
+		auctionHouseService.deleteAll();
+		auctionService.deleteAll();
+		bidService.deleteAll();
+		userService.deleteAll();
+	}
 
 	@Test
 	public void bidServiceTest() {

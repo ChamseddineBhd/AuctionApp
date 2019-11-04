@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.PostConstruct;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -23,12 +25,15 @@ public class AuctionHouseServiceTest {
     @Autowired
     private AuctionService auctionService;
 
+    @PostConstruct
+	void init() {
+    	// clean the h2 db
+		auctionHouseService.deleteAll();
+	}
+
 	@Test
 	public void auctionHouseServiceTest() {
-
-		auctionHouseService.deleteAll();
-
-		assertTrue(auctionHouseService.lisAuctionHouses().isEmpty());
+    	assertTrue(auctionHouseService.lisAuctionHouses().isEmpty());
 
 		AuctionHouse auctionHouse = auctionHouseService.createAuctionHouse("firstAuctionHouse");
 
