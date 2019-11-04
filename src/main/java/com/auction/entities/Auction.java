@@ -1,4 +1,4 @@
-package com.auction.entity;
+package com.auction.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -36,7 +36,7 @@ public class Auction {
 	@JsonIgnore
 	private AuctionHouse auctionHouse;
 
-	@OneToMany(mappedBy="auction")
+	@OneToMany(mappedBy="auction",  cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Bid> bids;
 }

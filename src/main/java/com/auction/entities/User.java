@@ -1,4 +1,4 @@
-package com.auction.entity;
+package com.auction.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -26,7 +26,7 @@ public class User {
 
 	private String adress;
 
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user",  cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Bid> bids;
 }

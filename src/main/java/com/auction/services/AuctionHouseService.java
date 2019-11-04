@@ -1,6 +1,6 @@
-package com.auction.service;
+package com.auction.services;
 
-import com.auction.entity.AuctionHouse;
+import com.auction.entities.AuctionHouse;
 
 import java.util.List;
 

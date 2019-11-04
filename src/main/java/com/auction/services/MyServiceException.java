@@ -1,4 +1,4 @@
-package com.auction.service;
+package com.auction.services;
 
 public class MyServiceException extends RuntimeException {
 

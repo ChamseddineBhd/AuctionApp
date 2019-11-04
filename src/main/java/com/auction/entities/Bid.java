@@ -1,10 +1,9 @@
-package com.auction.entity;
+package com.auction.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -12,15 +11,21 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuctionHouse {
+public class Bid {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long auctionHouseId;
+	private Long bidId;
 
-	private String name;
+	private double bidPrice;
 
-	@OneToMany(mappedBy="auctionHouse")
+	@ManyToOne
+	@JoinColumn(name="auction")
 	@JsonIgnore
-	private List<Auction> auctions;
+	private Auction auction;
+
+	@ManyToOne
+	@JoinColumn(name="user")
+	@JsonIgnore
+	private User user;
 }

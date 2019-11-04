@@ -1,6 +1,6 @@
-package com.auction.dao;
+package com.auction.models;
 
-import com.auction.entity.User;
+import com.auction.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserDao extends CrudRepository<User, Long> {

@@ -1,9 +1,9 @@
-package com.auction.rest;
+package com.auction.controllers;
 
-import com.auction.entity.Auction;
-import com.auction.service.AuctionHouseService;
-import com.auction.service.AuctionService;
-import com.auction.service.MyServiceException;
+import com.auction.entities.Auction;
+import com.auction.services.AuctionHouseService;
+import com.auction.services.AuctionService;
+import com.auction.services.MyServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

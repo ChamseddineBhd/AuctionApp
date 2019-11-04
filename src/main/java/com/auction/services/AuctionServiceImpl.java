@@ -1,10 +1,10 @@
-package com.auction.service;
+package com.auction.services;
 
-import com.auction.dao.AuctionDao;
+import com.auction.models.AuctionDao;
 
-import com.auction.dao.AuctionHouseDao;
-import com.auction.entity.Auction;
-import com.auction.entity.AuctionHouse;
+import com.auction.models.AuctionHouseDao;
+import com.auction.entities.Auction;
+import com.auction.entities.AuctionHouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,4 +51,9 @@ public class AuctionServiceImpl implements AuctionService {
 	public void deleteAll() {
 		auctionDao.deleteAll();
 	}
+
+    @Override
+    public Auction findById(Long auctionId) {
+        return auctionDao.findById(auctionId).get();
+    }
 }

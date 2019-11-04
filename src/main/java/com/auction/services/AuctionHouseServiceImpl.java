@@ -1,17 +1,17 @@
-package com.auction.service;
+package com.auction.services;
 
-import com.auction.dao.AuctionDao;
-import com.auction.dao.AuctionHouseDao;
+import com.auction.models.AuctionDao;
+import com.auction.models.AuctionHouseDao;
 
-import com.auction.entity.AuctionHouse;
+import com.auction.entities.AuctionHouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @Transactional
+@Service
 public class AuctionHouseServiceImpl implements AuctionHouseService {
 	
 	@Autowired

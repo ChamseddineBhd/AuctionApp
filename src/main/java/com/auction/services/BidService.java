@@ -1,8 +1,7 @@
-package com.auction.service;
+package com.auction.services;
 
-import com.auction.entity.Auction;
-import com.auction.entity.Bid;
-import com.auction.entity.User;
+import com.auction.entities.Bid;
+import com.auction.entities.User;
 
 import java.util.List;
 
@@ -12,5 +11,7 @@ public interface BidService {
 
     public List<Bid> listBids(Long auctionId) ;
 
-    public User showWinner(Long auctionId);
+    public User getWinner(Long auctionId);
+
+    void deleteAll();
 }

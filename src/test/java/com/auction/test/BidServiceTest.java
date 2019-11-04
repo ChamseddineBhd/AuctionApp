@@ -3,8 +3,11 @@ package com.auction.test;
 import com.auction.MySpringBootApplication;
 import com.auction.entities.Auction;
 import com.auction.entities.AuctionHouse;
+import com.auction.entities.User;
 import com.auction.services.AuctionHouseService;
 import com.auction.services.AuctionService;
+import com.auction.services.BidService;
+import com.auction.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +16,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= {MySpringBootApplication.class})
-public class AuctionServiceTest {
+public class BidServiceTest {
 
 	@Autowired
 	private AuctionService auctionService;
@@ -26,13 +28,22 @@ public class AuctionServiceTest {
 	@Autowired
 	private AuctionHouseService auctionHouseService;
 
-	@Test
-	public void auctionServiceTest() {
-		AuctionHouse auctionHouse1 = auctionHouseService.createAuctionHouse("firstAuctionHouse");
-		AuctionHouse auctionHouse2 = auctionHouseService.createAuctionHouse("SecondAuctionHouse");
+	@Autowired
+	private UserService userService;
 
-		assertTrue(auctionService.listAuctions(auctionHouse1.getAuctionHouseId()).isEmpty());
-		assertTrue(auctionService.listAuctions(auctionHouse2.getAuctionHouseId()).isEmpty());
+	@Autowired
+	private BidService bidService;
+
+	@Test
+	public void bidServiceTest() {
+		AuctionHouse auctionHouse1 = auctionHouseService.createAuctionHouse("firstAuctionHouse");
+
+		User chamseddine = User.builder().firstName("Chamseddine").lastName("BENHAMED").adress("Paris").build();
+		User olivier = User.builder().firstName("Oliver").lastName("jardin").adress("Lyon").build();
+
+		chamseddine = userService.createUser(chamseddine);
+		olivier = userService.createUser(olivier);
+
 
 		Auction auction = auctionService.createAuction(Auction.builder()
 				.name("firstAuction")
@@ -43,13 +54,17 @@ public class AuctionServiceTest {
 				.currentPrice(800)
 				.build(), auctionHouse1.getAuctionHouseId());
 
-		assertEquals(1, auctionService.listAuctions(auctionHouse1.getAuctionHouseId()).size());
+		bidService.bid(auction.getAuctionId(), chamseddine.getUserId(), 900);
+		auction = auctionService.findById(auction.getAuctionId());
+		assertEquals(900, auction.getCurrentPrice(), 0);
 
-		auctionService.deleteAuction(auction.getAuctionId());
 
-		assertTrue(auctionService.listAuctions(auctionHouse1.getAuctionHouseId()).isEmpty());
+		bidService.bid(auction.getAuctionId(), olivier.getUserId(), 1100);
+		auction = auctionService.findById(auction.getAuctionId());
+		assertEquals(1100, auction.getCurrentPrice(), 0);
 
-		auctionHouseService.deleteAuctionHouse(auctionHouse1.getAuctionHouseId());
-		auctionHouseService.deleteAuctionHouse(auctionHouse2.getAuctionHouseId());
+		User winner = bidService.getWinner(auction.getAuctionId());
+
+		assertEquals(winner.getUserId(), olivier.getUserId());
 	}
 }

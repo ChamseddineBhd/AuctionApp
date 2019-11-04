@@ -1,9 +1,9 @@
-package com.auction.rest;
+package com.auction.controllers;
 
-import com.auction.entity.Bid;
-import com.auction.entity.User;
-import com.auction.service.BidService;
-import com.auction.service.MyServiceException;
+import com.auction.entities.Bid;
+import com.auction.entities.User;
+import com.auction.services.BidService;
+import com.auction.services.MyServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public class BidRest {
 	@GetMapping("/auction-winner/{auctionId}")
 	public User showWinner(@PathVariable("auctionId") Long auctionId) {
 		try {
-			return bidService.showWinner(auctionId);
+			return bidService.getWinner(auctionId);
 		} catch (Exception e) {
 			throw new MyServiceException(e);
 		}

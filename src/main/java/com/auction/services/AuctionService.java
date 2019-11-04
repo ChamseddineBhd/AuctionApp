@@ -1,6 +1,6 @@
-package com.auction.service;
+package com.auction.services;
 
-import com.auction.entity.Auction;
+import com.auction.entities.Auction;
 
 import java.util.List;
 
@@ -15,4 +15,6 @@ public interface AuctionService {
     public List<Auction> listAuctionsBySTatus(String status);
 
     public void deleteAll();
+
+    Auction findById(Long auctionId);
 }

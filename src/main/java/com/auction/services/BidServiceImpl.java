@@ -1,12 +1,12 @@
-package com.auction.service;
+package com.auction.services;
 
-import com.auction.dao.AuctionDao;
-import com.auction.dao.AuctionHouseDao;
-import com.auction.dao.BidDao;
-import com.auction.dao.UserDao;
-import com.auction.entity.Auction;
-import com.auction.entity.Bid;
-import com.auction.entity.User;
+import com.auction.models.AuctionDao;
+import com.auction.models.AuctionHouseDao;
+import com.auction.models.BidDao;
+import com.auction.models.UserDao;
+import com.auction.entities.Auction;
+import com.auction.entities.Bid;
+import com.auction.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,9 +56,14 @@ public class BidServiceImpl implements BidService {
 	}
 
 	@Override
-	public User showWinner(Long auctionId) {
+	public User getWinner(Long auctionId) {
 		Auction auction = auctionDao.findById(auctionId).get();
 		Bid bid = auction.getBids().stream().max((bid1, bid2) -> (int) (100 * (bid1.getBidPrice() - bid2.getBidPrice()))).get();
 		return bid.getUser();
 	}
+
+    @Override
+    public void deleteAll() {
+        auctionDao.deleteAll();
+    }
 }
