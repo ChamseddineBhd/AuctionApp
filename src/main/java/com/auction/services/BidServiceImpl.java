@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,12 +30,17 @@ public class BidServiceImpl implements BidService {
 	@Autowired
 	private UserDao userDao;
 
+	private static final String AUCTION_NOT_FOUND = "auction not found !";
+
 	@Override
 	public void bid(Long auctionId,Long userId, double biddingPrice) {
-		Auction auction = auctionDao.findById(auctionId).get();
-		User user = userDao.findById(userId).get();
+		Auction auction = auctionDao.findById(auctionId).orElseThrow( () ->
+				new IllegalArgumentException(AUCTION_NOT_FOUND));
 
-		if (biddingPrice > auction.getCurrentPrice()) {
+		User user = userDao.findById(userId).orElseThrow( () ->
+				new IllegalArgumentException("user not found !"));
+
+		if (biddingPrice > auction.getCurrentPrice() && auction.getStart().compareTo(LocalDateTime.now()) <  0 ) {
 			auction.setCurrentPrice(biddingPrice);
 			bidDao.save(Bid.builder()
 					.auction(auction)
@@ -42,13 +48,16 @@ public class BidServiceImpl implements BidService {
 					.bidPrice(biddingPrice)
 					.build());
 			auctionDao.save(auction);
+		} else {
+			throw new IllegalArgumentException("check that the auction is started and the bidding price is greater than the current price");
 		}
 
 	}
 
 	@Override
 	public List<Bid> listBids(Long auctionId) {
-		Auction auction = auctionDao.findById(auctionId).get();
+		Auction auction = auctionDao.findById(auctionId).orElseThrow( () ->
+				new IllegalArgumentException(AUCTION_NOT_FOUND));
 		// to enforce load
 		auction.getBids().size();
 
@@ -57,8 +66,11 @@ public class BidServiceImpl implements BidService {
 
 	@Override
 	public User getWinner(Long auctionId) {
-		Auction auction = auctionDao.findById(auctionId).get();
-		Bid bid = auction.getBids().stream().max((bid1, bid2) -> (int) (100 * (bid1.getBidPrice() - bid2.getBidPrice()))).get();
+		Auction auction = auctionDao.findById(auctionId).orElseThrow( () ->
+				new IllegalArgumentException(AUCTION_NOT_FOUND));
+
+		Bid bid = auction.getBids().stream().max((bid1, bid2) -> (int) (100 * (bid1.getBidPrice() - bid2.getBidPrice()))).orElseThrow( () ->
+				new IllegalArgumentException("no bids was found for that auction!"));
 		return bid.getUser();
 	}
 
