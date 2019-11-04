@@ -2,7 +2,7 @@
 Rest API App
 
 ## Documentation
-After lunching the App you can find the API documentation (here) [localhost:8080/swagger-ui.html]
+After lunching the App you can find the API documentation on : localhost:8080/swagger-ui.html
 
 ## Assignment
 ### Step 1 - Auction house
