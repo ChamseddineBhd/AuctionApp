@@ -22,8 +22,8 @@ the auction is started)
 - List all bidding (with the user name) that has happen until now
 - For a terminated auction, show the winner (i.e. the bidder that puts the higher price)
 ### Infos
-- framework : Spring Boot 2
-- dataBase : h2
-- build system : maven
+- Framework : Spring Boot 2
+- DataBase : h2
+- Build system : maven
 - Tests : Junit
 - Documentation : Swagger docs
