@@ -10,7 +10,7 @@ After lunching the App you can find the API documentation on : localhost:8080/sw
 - List all auction houses created.
 - Delete a specific house.
 ### Step 2 - Auction
-- create an auction with some parameters: name, description, starting time, end time, start
+- Create an auction with some parameters: name, description, starting time, end time, start
 price, current price
 - List all auctions for a given auction house
 - Delete a specific auction
