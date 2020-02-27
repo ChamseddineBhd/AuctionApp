@@ -27,3 +27,5 @@ the auction is started)
 - Build system : maven
 - Tests : Junit
 - Documentation : Swagger docs
+
+Test Azure DevOps
