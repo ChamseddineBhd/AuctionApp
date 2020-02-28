@@ -28,4 +28,3 @@ the auction is started)
 - Tests : Junit
 - Documentation : Swagger docs
 
-Test Azure DevOps
